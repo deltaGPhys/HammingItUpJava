@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class HammingTest {
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public final ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testNoDistanceBetweenEmptyStrands() {
@@ -78,12 +78,13 @@ public class HammingTest {
         assertEquals(9, new Hamming("GGACGGATTCTG", "AGGACGGATTCT").getHammingDistance());
     }
 
-    @Test
+    @Test//(expected = IllegalArgumentException.class)
     public void testValidatesFirstStrandNotLonger() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("leftStrand and rightStrand must be of equal length.");
 
-        new Hamming("AATG", "AAA");
+        new Hamming("AATG", "AAA").getHammingDistance();
+
     }
 
     @Test
@@ -91,7 +92,7 @@ public class HammingTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("leftStrand and rightStrand must be of equal length.");
 
-        new Hamming("ATA", "AGTG");
+        new Hamming("ATA", "AGTG").getHammingDistance();
     }
 
 }
